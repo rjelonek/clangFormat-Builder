@@ -217,42 +217,36 @@ namespace ClangFormat
 				_di_IOTAProject project = projectGroup->ActiveProject;
 				if (project)
 				{
-					String projectPath = TPath::GetDirectoryName(project->FileName);
 					messages.AddSeparator();
-					messages.AddTitle("Formatting all sources in \"" + projectPath + "\"");
+					messages.AddTitle("Formatting all sources in project \"" + TPath::GetFileNameWithoutExtension(project->FileName) + "\"");
 					if (!settings->general.style.IsEmpty())
 					{
-						TStringDynArray cppFiles = TDirectory::GetFiles(projectPath, "*.cpp", TSearchOption::soAllDirectories);
-						TStringDynArray hFiles = TDirectory::GetFiles(projectPath, "*.h", TSearchOption::soAllDirectories);
-						String filesCount = IntToStr(cppFiles.Length + hFiles.Length);
-						int processedFilesCount = 0;
-						for (int i = 0; i < cppFiles.Length; ++i)
+						std::unique_ptr<TStringList> projectFiles(new TStringList(0x0));
+						std::unique_ptr<TStringList> filteredProjectFiles(new TStringList(0x0));
+						project->GetCompleteFileList(projectFiles.get());
+						for (int fileIndex = 0; fileIndex < projectFiles->Count; ++fileIndex)
 						{
-							++processedFilesCount;
-							messages.AddSubInfo(IntToStr(processedFilesCount) + "/" + filesCount + " \"" + cppFiles[i] + "\"");
-							if (!FormatSource(cppFiles[i], settings->general.style, settings->general.fallbackStyle))
+							String extension = TPath::GetExtension(projectFiles->Strings[fileIndex]).LowerCase();
+							if (extension == ".cpp" || extension == ".h")
+								filteredProjectFiles->Add(projectFiles->Strings[fileIndex]);
+						}
+
+						String filesCount = IntToStr(filteredProjectFiles->Count);
+						for (int fileIndex = 0; fileIndex < filteredProjectFiles->Count; ++fileIndex)
+						{
+							messages.AddSubInfo(IntToStr(fileIndex + 1) + "/" + filesCount + " \"" + filteredProjectFiles->Strings[fileIndex] + "\"");
+							if (!FormatSource(filteredProjectFiles->Strings[fileIndex], settings->general.style, settings->general.fallbackStyle))
 							{
 								retVal = false;
-								messages.AddError("Formatting \"" + cppFiles[i] + "\" failed");
+								messages.AddError("Formatting \"" + filteredProjectFiles->Strings[fileIndex] + "\" failed");
 							}
 						}
 
-						for (int i = 0; i < hFiles.Length; ++i)
-						{
-							++processedFilesCount;
-							messages.AddSubInfo(IntToStr(processedFilesCount) + "/" + filesCount + " \"" + hFiles[i] + "\"");
-							if (!FormatSource(hFiles[i], settings->general.style, settings->general.fallbackStyle))
-							{
-								retVal = false;
-								messages.AddError("Formatting \"" + hFiles[i] + "\" failed");
-							}
-						}
-
-						messages.AddInfo("Formatting all sources finished");
+						messages.AddInfo("Formatting all sources in project finished");
 						if (!IOTAEditExtension::IsAnyFileModified())
 							project->Refresh(false);
 
-						MessageBox(0x0, "Formatting all sources finished", AnsiString(Application->Title).c_str(), MB_OK);
+						MessageBox(0x0, "Formatting all sources in project finished", AnsiString(Application->Title).c_str(), MB_OK);
 					}
 				}
 			}
