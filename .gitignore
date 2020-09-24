@@ -30,3 +30,22 @@
 *.exe
 *.out
 *.app
+
+#Created by Embarcadero C++Builder
+*.#*
+*.ilc
+*.ild
+*.ilf
+*.ils
+*.map
+*.pdi
+*.tds
+*.local
+*.bpl
+*.~*~
+*.cgl
+*.dcu
+*.res
+*.@@@
+*.twfd
+*.twopts
