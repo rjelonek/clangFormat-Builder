@@ -33,47 +33,40 @@ namespace ClangFormat
 				_di_IOTAProject project = projectGroup->ActiveProject;
 				if (project)
 				{
-					String projectPath = TPath::GetDirectoryName(project->FileName);
 					messages.AddSeparator();
-					messages.AddTitle("Converting files to UTF8 BOM in " + projectPath);
-					TStringDynArray cppFiles = TDirectory::GetFiles(projectPath, "*.cpp", TSearchOption::soAllDirectories);
-					TStringDynArray hFiles = TDirectory::GetFiles(projectPath, "*.h", TSearchOption::soAllDirectories);
-					String filesCount = IntToStr(cppFiles.Length + hFiles.Length);
-					int processedFilesCount = 0;
+					messages.AddTitle("Converting files to UTF8 BOM in project " + TPath::GetFileNameWithoutExtension(project->FileName));
+
+					std::unique_ptr<TStringList> projectFiles(new TStringList(0x0));
+					std::unique_ptr<TStringList> filteredProjectFiles(new TStringList(0x0));
+					project->GetCompleteFileList(projectFiles.get());
+					for (int fileIndex = 0; fileIndex < projectFiles->Count; ++fileIndex)
+					{
+						String extension = TPath::GetExtension(projectFiles->Strings[fileIndex]).LowerCase();
+						if (extension == ".cpp" || extension == ".h")
+							filteredProjectFiles->Add(projectFiles->Strings[fileIndex]);
+					}
+
+					String filesCount = IntToStr(filteredProjectFiles->Count);
 					ConvertingResult result = ConvertingResult::Ok;
-					for (int i = 0; i < cppFiles.Length; ++i)
+					for (int fileIndex = 0; fileIndex < filteredProjectFiles->Count; ++fileIndex)
 					{
-						++processedFilesCount;
-						messages.AddSubInfo(IntToStr(processedFilesCount) + "/" + filesCount + " Checking file " + cppFiles[i]);
-						result = ToUTF8Bom(cppFiles[i]);
+						messages.AddSubInfo(IntToStr(fileIndex + 1) + "/" + filesCount + " Checking file " +
+											filteredProjectFiles->Strings[fileIndex]);
+						result = ToUTF8Bom(filteredProjectFiles->Strings[fileIndex]);
 						if (result == ConvertingResult::Ok)
 							messages.AddSubInfo("\tFile converted");
 						else if (result == ConvertingResult::Failed)
 						{
 							retVal = false;
-							messages.AddError("Converting \"" + cppFiles[i] + "\" failed");
+							messages.AddError("Converting \"" + filteredProjectFiles->Strings[fileIndex] + "\" failed");
 						}
 					}
 
-					for (int i = 0; i < hFiles.Length; ++i)
-					{
-						++processedFilesCount;
-						messages.AddSubInfo(IntToStr(processedFilesCount) + "/" + filesCount + " Checking file " + hFiles[i]);
-						result = ToUTF8Bom(hFiles[i]);
-						if (result == ConvertingResult::Ok)
-							messages.AddSubInfo("\tFile converted");
-						else if (result == ConvertingResult::Failed)
-						{
-							retVal = false;
-							messages.AddError("Converting \"" + hFiles[i] + "\" failed");
-						}
-					}
-
-					messages.AddInfo("Converting files to UTF8 BOM finished");
+					messages.AddInfo("Converting files to UTF8 BOM in project finished");
 					if (!IOTAEditExtension::IsAnyFileModified())
 						project->Refresh(false);
 
-					MessageBox(0x0, "Converting files to UTF8 BOM finished", AnsiString(Application->Title).c_str(), MB_OK);
+					MessageBox(0x0, "Converting files to UTF8 BOM in project finished", AnsiString(Application->Title).c_str(), MB_OK);
 				}
 			}
 		}
