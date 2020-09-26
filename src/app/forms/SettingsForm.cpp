@@ -14,7 +14,7 @@ __fastcall TsettingsForm::TsettingsForm(TComponent *Owner, boost::shared_ptr<Cla
 
 void TsettingsForm::InitializeComponents()
 {
-	ClientHeight = 232;
+	ClientHeight = 240;
 	ClientWidth = 500;
 
 	autoFormattingCheckBox->Checked = settings->general.autoFormatting;

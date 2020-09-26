@@ -35,6 +35,9 @@ class TsettingsForm : public TForm
 	TLabel *fallbackStyleLabel;
 	TComboBox *fallbackStyleComboBox;
 	TButton *resetButton;
+	TPanel *contentPanel;
+	TPanel *footerPanel;
+
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall selectFileButtonClick(TObject *Sender);
 	void __fastcall autoFormattingCheckBoxClick(TObject *Sender);
