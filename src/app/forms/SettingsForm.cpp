@@ -3,6 +3,7 @@
 
 #include "SettingsForm.h"
 #include "Settings.h"
+#include "Theming.h"
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -36,6 +37,10 @@ void TsettingsForm::InitializeComponents()
 void __fastcall TsettingsForm::FormShow(TObject *Sender)
 {
 	InitializeComponents();
+	ClangFormat::Theming theming;
+	theming.RegisterFormClass(this->ClassType(), this);
+	if (theming.IsThemingSupported())
+		this->Padding->SetBounds(0, 0, 0, 0);
 }
 
 void __fastcall TsettingsForm::selectFileButtonClick(TObject *Sender)
