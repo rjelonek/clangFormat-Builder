@@ -3,6 +3,7 @@
 
 #include "SettingsForm.h"
 #include "Settings.h"
+#include "Theming.h"
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -14,7 +15,7 @@ __fastcall TsettingsForm::TsettingsForm(TComponent *Owner, boost::shared_ptr<Cla
 
 void TsettingsForm::InitializeComponents()
 {
-	ClientHeight = 232;
+	ClientHeight = 240;
 	ClientWidth = 500;
 
 	autoFormattingCheckBox->Checked = settings->general.autoFormatting;
@@ -36,6 +37,10 @@ void TsettingsForm::InitializeComponents()
 void __fastcall TsettingsForm::FormShow(TObject *Sender)
 {
 	InitializeComponents();
+	ClangFormat::Theming theming;
+	theming.RegisterFormClass(this->ClassType(), this);
+	if (theming.IsThemingSupported())
+		this->Padding->SetBounds(0, 0, 0, 0);
 }
 
 void __fastcall TsettingsForm::selectFileButtonClick(TObject *Sender)
