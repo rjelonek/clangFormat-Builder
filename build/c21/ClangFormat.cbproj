@@ -46,7 +46,8 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <BRCC_CompilerToUse>rc</BRCC_CompilerToUse>
+        <BRCC_IncludePath>$(BDSINCLUDE)\windows\sdk;$(BRCC_IncludePath)</BRCC_IncludePath>
         <ILINK_Description>ClangFormat plug-in for Embarcadero® C++Builder</ILINK_Description>
         <DllSuffix>210</DllSuffix>
         <DesignOnlyPackage>true</DesignOnlyPackage>
@@ -55,10 +56,10 @@
         <BCC_wpun>true</BCC_wpun>
         <BCC_wuse>true</BCC_wuse>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=Plug-in for Embarcadero® C++Builder to format your code using Clang&apos;s format tool;FileVersion=1.0.0.0;InternalName=;LegalCopyright=Copyright 2020 Rafał Jelonek;LegalTrademarks=;OriginalFilename=;ProductName=clangFormat-Builder;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=;Comments=</VerInfo_Keys>
         <BCC_WarningIsError>true</BCC_WarningIsError>
-        <IncludePath>..\..\src\app\ClangFormat\;..\..\src\app\ClangFormat\Configuration\Repository\;..\..\src\app\forms\;..\..\src\app\ClangFormat\Configuration\;..\..\src\;..\..\src\app\ClangFormat\Observer\;..\C++Builder\XE7\;..\app\ClangFormat\;..\app\ClangFormat\Configuration\Repository\;..\app\forms\;..\app\ClangFormat\Configuration\;..\;..\app\ClangFormat\Observer\;XE7\;app\ClangFormat\Configuration\Repository\;app\forms\;app\ClangFormat\Configuration\;app\ClangFormat\;app\ClangFormat\Observer\;$(BDSINCLUDE)\windows\vcl\design\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\src\app\ClangFormat\;..\..\src\app\ClangFormat\Configuration\Repository\;..\..\src\app\forms\;..\..\src\app\ClangFormat\Configuration\;..\..\src\;..\..\src\app\ClangFormat\Observer\;..\C++Builder\XE7\;..\app\ClangFormat\;..\app\ClangFormat\Configuration\Repository\;..\app\forms\;..\app\ClangFormat\Configuration\;..\;..\app\ClangFormat\Observer\;XE7\;app\ClangFormat\Configuration\Repository\;app\forms\;app\ClangFormat\Configuration\;app\ClangFormat\;app\ClangFormat\Observer\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\rc\;..\..\src\app\ClangFormat\;..\..\src\app\ClangFormat\Configuration\Repository\;..\..\src\app\forms\;..\..\src\app\ClangFormat\Configuration\;..\..\src\;..\..\src\app\ClangFormat\Observer\;..\;$(BDSINCLUDE)\windows\vcl\design\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\rc\;..\..\src\app\ClangFormat\;..\..\src\app\ClangFormat\Configuration\Repository\;..\..\src\app\forms\;..\..\src\app\ClangFormat\Configuration\;..\..\src\;..\..\src\app\ClangFormat\Observer\;..\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <ProjectType>CppPackage</ProjectType>
         <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
         <ILINK_GenerateLibFile>true</ILINK_GenerateLibFile>
@@ -124,6 +125,10 @@
         <PackageImport Include="rtl.bpi">
             <BuildOrder>1</BuildOrder>
         </PackageImport>
+        <ResourceCompile Include="..\..\rc\clangFormat.rc">
+            <Form>clangFormat.res</Form>
+            <BuildOrder>19</BuildOrder>
+        </ResourceCompile>
         <CppCompile Include="..\..\src\app\ClangFormat\CodeFormatter.cpp">
             <DependentOn>..\..\src\app\ClangFormat\CodeFormatter.h</DependentOn>
             <BuildOrder>3</BuildOrder>

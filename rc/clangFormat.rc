@@ -1,0 +1,49 @@
+//https://docs.microsoft.com/en-us/windows/win32/menurc/versioninfo-resource
+#include <windows.h>
+
+#define RELEASE 1
+#define BREAKING 0
+#define FEATURE 0
+#define FIX 0
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+#define VER_FILE_VERSION RELEASE, BREAKING, FEATURE, FIX
+#define VER_FILE_VERSION_STR TOSTRING(RELEASE) "." TOSTRING(BREAKING) "." TOSTRING(FEATURE) "." TOSTRING(FIX)
+#define VER_PRODUCT_VERSION VER_FILE_VERSION
+#define VER_PRODUCT_VERSION_STR VER_FILE_VERSION_STR
+
+#pragma code_page(65001) // UTF-8
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VER_FILE_VERSION
+ PRODUCTVERSION VER_PRODUCT_VERSION
+ FILEFLAGSMASK VS_FF_DEBUG//VS_FFI_FILEFLAGSMASK
+#ifdef _DEBUG
+ FILEFLAGS VS_FF_DEBUG
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS VOS__WINDOWS32
+ FILETYPE VFT_DLL//VFT_APP, VFT_STATIC_LIB
+ FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Plug-in for Embarcadero® C++Builder to format your code using Clang's format tool\0"
+            VALUE "FileVersion", VER_FILE_VERSION_STR "\0"
+            VALUE "LegalCopyright", "Copyright 2020 Rafał Jelonek\0"
+            VALUE "OriginalFilename", "ClangFormat.bpl\0"
+            VALUE "ProductName", "ClangFormat-Builder\0"
+            VALUE "ProductVersion", VER_PRODUCT_VERSION_STR "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
