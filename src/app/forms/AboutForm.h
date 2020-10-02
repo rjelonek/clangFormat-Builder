@@ -1,4 +1,4 @@
-#ifndef AboutFormH
+﻿#ifndef AboutFormH
 #define AboutFormH
 
 #include <System.Classes.hpp>
@@ -8,9 +8,13 @@
 
 class TaboutForm : public TForm
 {
-	__published :					 // IDE-managed Components
-				  private :			 // User declarations
-							public : // User declarations
-									 __fastcall TaboutForm(TComponent *Owner);
+	__published : // IDE-managed Components
+				  void __fastcall FormShow(TObject *Sender);
+
+  private: // User declarations
+	void InitializeComponents();
+
+  public: // User declarations
+	__fastcall TaboutForm(TComponent *Owner);
 };
 #endif
