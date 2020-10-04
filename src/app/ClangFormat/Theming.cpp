@@ -1,4 +1,5 @@
-﻿#pragma hdrstop
+﻿#include "ClangFormatPCH1.h"
+#pragma hdrstop
 
 #include "Theming.h"
 #include <ToolsAPI.hpp>

@@ -159,6 +159,10 @@
             <DependentOn>..\..\src\app\ClangFormat\EncodingConverter.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\src\app\ClangFormat\FileInfo.cpp">
+            <DependentOn>..\..\src\app\ClangFormat\FileInfo.h</DependentOn>
+            <BuildOrder>21</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\src\app\ClangFormat\IOTAEditExtension.cpp">
             <DependentOn>..\..\src\app\ClangFormat\IOTAEditExtension.h</DependentOn>
             <BuildOrder>12</BuildOrder>
@@ -183,6 +187,12 @@
             <DependentOn>..\..\src\app\ClangFormat\Theming.h</DependentOn>
             <BuildOrder>18</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\src\app\forms\AboutForm.cpp">
+            <Form>aboutForm</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>..\..\src\app\forms\AboutForm.h</DependentOn>
+            <BuildOrder>20</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\src\app\forms\SettingsForm.cpp">
             <Form>settingsForm</Form>
             <FormType>dfm</FormType>
@@ -196,6 +206,7 @@
             <BuildOrder>2</BuildOrder>
         </PCHCompile>
         <FormResources Include="..\..\src\app\forms\SettingsForm.dfm"/>
+        <FormResources Include="..\..\src\app\forms\AboutForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

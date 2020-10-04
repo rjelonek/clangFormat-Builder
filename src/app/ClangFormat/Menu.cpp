@@ -6,6 +6,7 @@
 #include "Settings.h"
 #include "EncodingConverter.h"
 #include "SettingsForm.h"
+#include "AboutForm.h"
 
 namespace ClangFormat
 {
@@ -17,6 +18,7 @@ namespace ClangFormat
 		enableAutoFormattingSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 		convertAllFilesToUTF8BomSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 		optionsSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
+		aboutSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 	}
 
 	void __fastcall Menu::FormatCurrentSourceSubmenuClick(System::TObject *Sender)
@@ -54,6 +56,12 @@ namespace ClangFormat
 		SetStates();
 	}
 
+	void __fastcall Menu::AboutSubmenuClick(System::TObject *Sender)
+	{
+		std::unique_ptr<TaboutForm> aboutForm(new TaboutForm(Application));
+		aboutForm->ShowModal();
+	}
+
 	void Menu::Add()
 	{
 		_di_INTAServices services;
@@ -79,6 +87,7 @@ namespace ClangFormat
 		enableAutoFormattingSubmenu->Caption = "Enable auto formatting";
 		convertAllFilesToUTF8BomSubmenu->Caption = "Convert all files to UTF8 BOM";
 		optionsSubmenu->Caption = "Options...";
+		aboutSubmenu->Caption = "About...";
 	}
 
 	void Menu::SetShortCuts()
@@ -94,6 +103,7 @@ namespace ClangFormat
 		enableAutoFormattingSubmenu->OnClick = EnableAutoFormattingSubmenuClick;
 		convertAllFilesToUTF8BomSubmenu->OnClick = ConvertAllFilesToUTF8BomSubmenuClick;
 		optionsSubmenu->OnClick = OptionsSubmenuClick;
+		aboutSubmenu->OnClick = AboutSubmenuClick;
 	}
 
 	void Menu::SetMenus()
@@ -103,6 +113,7 @@ namespace ClangFormat
 		clangFormatMenu->Add(enableAutoFormattingSubmenu.get());
 		clangFormatMenu->Add(convertAllFilesToUTF8BomSubmenu.get());
 		clangFormatMenu->Add(optionsSubmenu.get());
+		clangFormatMenu->Add(aboutSubmenu.get());
 	}
 
 	void Menu::SetStates()
