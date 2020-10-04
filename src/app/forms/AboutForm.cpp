@@ -3,6 +3,7 @@
 
 #include "AboutForm.h"
 #include "Theming.h"
+#include "FileInfo.h"
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -20,6 +21,11 @@ void TaboutForm::InitializeComponents()
 
 	sourceUrlLinkLabel->Left = (sourcesPanel->Width - sourceUrlLinkLabel->Width) / 2;
 	licenseLinkLabel->Left = (licensePanel->Width - licenseLinkLabel->Width) / 2;
+
+	ClangFormat::FileInfo fileInfo(GetModuleName((unsigned)HInstance));
+	titleLabel->Caption = fileInfo.GetProductName();
+	versionLabel->Caption = "Version " + fileInfo.GetProductVersion();
+	copyrightLabel->Caption = fileInfo.GetLegalCopyright();
 }
 
 void __fastcall TaboutForm::FormShow(TObject *Sender)

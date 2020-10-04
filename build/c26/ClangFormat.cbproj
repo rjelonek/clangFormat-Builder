@@ -159,6 +159,10 @@
             <DependentOn>..\..\src\app\ClangFormat\EncodingConverter.h</DependentOn>
             <BuildOrder>10</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\src\app\ClangFormat\FileInfo.cpp">
+            <DependentOn>..\..\src\app\ClangFormat\FileInfo.h</DependentOn>
+            <BuildOrder>21</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\src\app\ClangFormat\IOTAEditExtension.cpp">
             <DependentOn>..\..\src\app\ClangFormat\IOTAEditExtension.h</DependentOn>
             <BuildOrder>12</BuildOrder>

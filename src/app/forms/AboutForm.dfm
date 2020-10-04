@@ -26,8 +26,8 @@ object aboutForm: TaboutForm
     Height = 13
     Align = alBottom
     Alignment = taCenter
-    Caption = 'Copyright 2020 Rafa'#322' Jelonek'
-    ExplicitWidth = 142
+    Caption = 'Copyright'
+    ExplicitWidth = 47
   end
   object titleLabel: TLabel
     AlignWithMargins = True
@@ -38,14 +38,14 @@ object aboutForm: TaboutForm
     Margins.Top = 10
     Align = alTop
     Alignment = taCenter
-    Caption = 'ClangFormat-Builder'
+    Caption = 'Title'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitWidth = 169
+    ExplicitWidth = 38
   end
   object bevel: TBevel
     AlignWithMargins = True
@@ -70,8 +70,8 @@ object aboutForm: TaboutForm
     Height = 13
     Align = alTop
     Alignment = taCenter
-    Caption = 'Version 1.0.0.0'
-    ExplicitWidth = 74
+    Caption = 'Version'
+    ExplicitWidth = 35
   end
   object licenseLabel: TLabel
     AlignWithMargins = True
