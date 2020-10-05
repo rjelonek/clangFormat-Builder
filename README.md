@@ -71,6 +71,12 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## Versioning
+
+**RELEASE.BREAKING.FEATURE.FIX**
+
+You can read about explicit versioning [here](https://medium.com/sapioit/why-having-3-numbers-in-the-version-name-is-bad-92fc1f6bc73c). Also, you can find information about similar software versioning schema [here](https://github.com/software-development-guidelines/explicit-versioning/blob/master/VERSIONING.md) and [here](https://github.com/exadra37-versioning/explicit-versioning).
+
 ## License
 
 This project is licensed under the `Apache-2.0 License`. See the [LICENSE](/LICENSE) file for the full license text.

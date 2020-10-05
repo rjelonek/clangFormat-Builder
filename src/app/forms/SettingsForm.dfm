@@ -3,7 +3,7 @@ object settingsForm: TsettingsForm
   Top = 0
   BorderStyle = bsDialog
   Caption = 'ClangFormat settings'
-  ClientHeight = 240
+  ClientHeight = 241
   ClientWidth = 500
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -23,14 +23,14 @@ object settingsForm: TsettingsForm
     Left = 5
     Top = 0
     Width = 490
-    Height = 210
+    Height = 211
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object shortcutsLabel: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 103
+      Top = 130
       Width = 484
       Height = 17
       Align = alTop
@@ -74,7 +74,7 @@ object settingsForm: TsettingsForm
     object clangFormatPathPanel: TPanel
       AlignWithMargins = True
       Left = 15
-      Top = 126
+      Top = 103
       Width = 475
       Height = 21
       Margins.Left = 15
@@ -263,7 +263,7 @@ object settingsForm: TsettingsForm
   end
   object footerPanel: TPanel
     Left = 5
-    Top = 210
+    Top = 211
     Width = 490
     Height = 25
     Align = alBottom
