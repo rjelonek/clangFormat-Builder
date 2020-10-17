@@ -15,15 +15,13 @@ __fastcall TsettingsForm::TsettingsForm(TComponent *Owner, boost::shared_ptr<Cla
 
 void TsettingsForm::InitializeComponents()
 {
-	ClientHeight = 241;
-	ClientWidth = 500;
-
 	autoFormattingCheckBox->Checked = settings->general.autoFormatting;
 	styleComboBox->ItemIndex = styleComboBox->Items->IndexOf(settings->general.style);
 	fallbackStyleComboBox->ItemIndex = fallbackStyleComboBox->Items->IndexOf(settings->general.fallbackStyle);
 	clangFormatPathEdit->Text = settings->general.clangFormatPath;
 	autoFormattingHotKey->HotKey = settings->shortcuts.autoFormatting;
 	formatAllSourcesHotKey->HotKey = settings->shortcuts.formatAllSources;
+	formatSelectedLinesHotKey->HotKey = settings->shortcuts.formatSelectedLines;
 
 	styleComboBox->ShowHint = true;
 	styleComboBox->Hint = "Coding style. Use style=file to load style configuration from .clang-format file located in one of the parent directories "
@@ -86,6 +84,11 @@ void __fastcall TsettingsForm::autoFormattingHotKeyChange(TObject *Sender)
 void __fastcall TsettingsForm::formatAllSourcesHotKeyChange(TObject *Sender)
 {
 	settings->shortcuts.formatAllSources = formatAllSourcesHotKey->HotKey;
+}
+
+void __fastcall TsettingsForm::formatSelectedLinesHotKeyChange(TObject *Sender)
+{
+	settings->shortcuts.formatSelectedLines = formatSelectedLinesHotKey->HotKey;
 }
 
 void __fastcall TsettingsForm::resetButtonClick(TObject *Sender)

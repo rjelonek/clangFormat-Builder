@@ -37,6 +37,9 @@ class TsettingsForm : public TForm
 	TButton *resetButton;
 	TPanel *contentPanel;
 	TPanel *footerPanel;
+	TPanel *formatSelectedLinesPanel;
+	TLabel *formatSelectedLinesLabel;
+	THotKey *formatSelectedLinesHotKey;
 
 	void __fastcall FormShow(TObject *Sender);
 	void __fastcall selectFileButtonClick(TObject *Sender);
@@ -46,6 +49,7 @@ class TsettingsForm : public TForm
 	void __fastcall formatAllSourcesHotKeyChange(TObject *Sender);
 	void __fastcall fallbackStyleComboBoxChange(TObject *Sender);
 	void __fastcall resetButtonClick(TObject *Sender);
+	void __fastcall formatSelectedLinesHotKeyChange(TObject *Sender);
 
   private: // User declarations
 	boost::shared_ptr<ClangFormat::Configuration::Settings> settings;

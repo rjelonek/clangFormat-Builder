@@ -64,16 +64,28 @@ namespace ClangFormat
 
 	bool CodeFormatter::FormatSource(String filePath, String style, String fallbackStyle)
 	{
+		return FormatSource(filePath, style, fallbackStyle, 0, 0);
+	}
+
+	bool CodeFormatter::FormatSource(String filePath, String style, String fallbackStyle, unsigned int startLine, unsigned int endLine)
+	{
 		bool retVal = false;
 		if (!settings->general.clangFormatPath.IsEmpty() && TFile::Exists(filePath) && !style.IsEmpty())
 		{
+			String styleParam = " --style=" + style;
+			String fallbackStyleParam = " --fallback-style=" + fallbackStyle;
+			String filePathParam = " -i \"" + filePath + "\"";
+			String linesParam = "";
+			if (startLine != 0 && endLine != 0)
+				linesParam = " --lines=" + UIntToStr(startLine) + ":" + UIntToStr(endLine);
+
 			SHELLEXECUTEINFOW ShExecInfo;
 			ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 			ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
 			ShExecInfo.hwnd = 0x0;
 			ShExecInfo.lpVerb = L"Open";
 			ShExecInfo.lpFile = settings->general.clangFormatPath.c_str();
-			ShExecInfo.lpParameters = String("--style=" + style + " --fallback-style=" + fallbackStyle + " -i \"" + filePath + "\"").c_str();
+			ShExecInfo.lpParameters = String(styleParam + fallbackStyleParam + filePathParam + linesParam).c_str();
 			ShExecInfo.lpDirectory = 0x0;
 			ShExecInfo.nShow = SW_HIDE;
 			ShExecInfo.hInstApp = 0x0;
@@ -88,6 +100,61 @@ namespace ClangFormat
 				else if (dwExitCode == 0)
 					retVal = true;
 			}
+		}
+
+		return retVal;
+	}
+
+	FormatResult CodeFormatter::FormatSource(_di_IOTASourceEditor sourceEditor, unsigned int startLine, unsigned int endLine)
+	{
+		FormatResult retVal = FormatResult::FormattingFailed;
+		if (sourceEditor && !settings->general.style.IsEmpty())
+		{
+			String extension = TPath::GetExtension(sourceEditor->FileName).LowerCase();
+			if (extension == ".cpp" || extension == ".h")
+			{
+				messages.AddInfo("Formatting \"" + sourceEditor->FileName + "\"");
+				int editorSize = 0;
+				String textFromEditor = GetText(sourceEditor, editorSize);
+				if (!textFromEditor.IsEmpty())
+				{
+					String tempFile = sourceEditor->FileName + ".temp";
+					try
+					{
+						TFile::WriteAllText(tempFile, textFromEditor, TEncoding::UTF8);
+						if (FormatSource(tempFile, settings->general.style, settings->general.fallbackStyle, startLine, endLine))
+						{
+							String formattedText = TFile::ReadAllText(tempFile, TEncoding::UTF8);
+							std::map<int, TOTACharPos> bookmarkList;
+							GetBookmarkList(sourceEditor, bookmarkList);
+							SetText(sourceEditor, editorSize, formattedText.Trim());
+							SetBookmarkList(sourceEditor, bookmarkList);
+							retVal = FormatResult::Ok;
+						}
+						else
+							messages.AddError("Formatting \"" + sourceEditor->FileName + "\" failed");
+
+						if (TFile::Exists(tempFile))
+							TFile::Delete(tempFile);
+					}
+					catch (Exception &ex)
+					{
+						messages.AddError(ex.Message + " (\"" + sourceEditor->FileName + "\")", __FUNC__);
+					}
+				}
+				else
+					retVal = FormatResult::Ok;
+			}
+			else
+			{
+				retVal = FormatResult::NotSupportedFile;
+				messages.AddError("File \"" + sourceEditor->FileName + "\" is not supported");
+			}
+		}
+		else if (!sourceEditor)
+		{
+			retVal = FormatResult::EditorNotAvailable;
+			messages.AddError("Source editor is not available");
 		}
 
 		return retVal;
@@ -128,57 +195,7 @@ namespace ClangFormat
 
 	FormatResult CodeFormatter::FormatSource(_di_IOTASourceEditor sourceEditor)
 	{
-		FormatResult retVal = FormatResult::FormattingFailed;
-		if (sourceEditor && !settings->general.style.IsEmpty())
-		{
-			String extension = TPath::GetExtension(sourceEditor->FileName).LowerCase();
-			if (extension == ".cpp" || extension == ".h")
-			{
-				messages.AddInfo("Formatting \"" + sourceEditor->FileName + "\"");
-				int editorSize = 0;
-				String textFromEditor = GetText(sourceEditor, editorSize);
-				if (!textFromEditor.IsEmpty())
-				{
-					String tempFile = sourceEditor->FileName + ".temp";
-					try
-					{
-						TFile::WriteAllText(tempFile, textFromEditor, TEncoding::UTF8);
-						if (FormatSource(tempFile, settings->general.style, settings->general.fallbackStyle))
-						{
-							String formattedText = TFile::ReadAllText(tempFile, TEncoding::UTF8);
-							std::map<int, TOTACharPos> bookmarkList;
-							GetBookmarkList(sourceEditor, bookmarkList);
-							SetText(sourceEditor, editorSize, formattedText.Trim());
-							SetBookmarkList(sourceEditor, bookmarkList);
-							retVal = FormatResult::Ok;
-						}
-						else
-							messages.AddError("Formatting \"" + sourceEditor->FileName + "\" failed");
-
-						if (TFile::Exists(tempFile))
-							TFile::Delete(tempFile);
-					}
-					catch (Exception &ex)
-					{
-						messages.AddError(ex.Message + " (\"" + sourceEditor->FileName + "\")", __FUNC__);
-					}
-				}
-				else
-					retVal = FormatResult::Ok;
-			}
-			else
-			{
-				retVal = FormatResult::NotSupportedFile;
-				messages.AddError("File \"" + sourceEditor->FileName + "\" is not supported");
-			}
-		}
-		else if (!sourceEditor)
-		{
-			retVal = FormatResult::EditorNotAvailable;
-			messages.AddError("Source editor is not available");
-		}
-
-		return retVal;
+		return FormatSource(sourceEditor, 0, 0);
 	}
 
 	FormatResult CodeFormatter::FormatCurrentSource()
@@ -196,6 +213,30 @@ namespace ClangFormat
 					_di_IOTASourceEditor fileSourceEditor;
 					if (::Supports(editor, __uuidof(IOTASourceEditor), &fileSourceEditor))
 						retVal = FormatSource(fileSourceEditor);
+					else
+						messages.AddError("Source editor for file \"" + editor->FileName + "\" is not available");
+				}
+			}
+		}
+
+		return retVal;
+	}
+
+	FormatResult CodeFormatter::FormatSelectedLines()
+	{
+		FormatResult retVal = FormatResult::EditorNotAvailable;
+		_di_IOTAModuleServices moduleServices = 0x0;
+		if (BorlandIDEServices && BorlandIDEServices->Supports(moduleServices))
+		{
+			_di_IOTAModule module = moduleServices->CurrentModule();
+			if (module)
+			{
+				_di_IOTAEditor editor = module->CurrentEditor;
+				if (editor)
+				{
+					_di_IOTASourceEditor fileSourceEditor;
+					if (::Supports(editor, __uuidof(IOTASourceEditor), &fileSourceEditor))
+						retVal = FormatSource(fileSourceEditor, fileSourceEditor->BlockStart.Line, fileSourceEditor->BlockAfter.Line);
 					else
 						messages.AddError("Source editor for file \"" + editor->FileName + "\" is not available");
 				}

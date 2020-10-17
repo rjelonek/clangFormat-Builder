@@ -16,6 +16,7 @@ namespace ClangFormat
 		{
 			autoFormatting = TextToShortCut("Alt+D");
 			formatAllSources = TextToShortCut("Alt+A");
+			formatSelectedLines = TextToShortCut("Alt+S");
 		}
 	}; // namespace Configuration
 };	   // namespace ClangFormat
