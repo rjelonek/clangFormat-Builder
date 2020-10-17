@@ -3,7 +3,7 @@
 
 #define RELEASE 1
 #define BREAKING 0
-#define FEATURE 0
+#define FEATURE 1
 #define FIX 0
 
 #define STRINGIFY(x) #x
