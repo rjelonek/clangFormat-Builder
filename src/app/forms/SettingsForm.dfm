@@ -3,7 +3,7 @@ object settingsForm: TsettingsForm
   Top = 0
   BorderStyle = bsDialog
   Caption = 'ClangFormat settings'
-  ClientHeight = 241
+  ClientHeight = 261
   ClientWidth = 500
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -23,7 +23,7 @@ object settingsForm: TsettingsForm
     Left = 5
     Top = 0
     Width = 490
-    Height = 211
+    Height = 231
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
@@ -93,9 +93,9 @@ object settingsForm: TsettingsForm
         Caption = 'Clang format path'
       end
       object clangFormatPathEdit: TEdit
-        Left = 102
+        Left = 107
         Top = 0
-        Width = 347
+        Width = 341
         Height = 21
         Anchors = [akTop, akRight]
         ReadOnly = True
@@ -133,7 +133,7 @@ object settingsForm: TsettingsForm
         Caption = 'Format all sources'
       end
       object formatAllSourcesHotKey: THotKey
-        Left = 102
+        Left = 107
         Top = 0
         Width = 145
         Height = 19
@@ -166,7 +166,7 @@ object settingsForm: TsettingsForm
         Caption = 'Default style'
       end
       object styleComboBox: TComboBox
-        Left = 102
+        Left = 107
         Top = 0
         Width = 145
         Height = 21
@@ -189,7 +189,7 @@ object settingsForm: TsettingsForm
     object autoFormattingPanel: TPanel
       AlignWithMargins = True
       Left = 15
-      Top = 180
+      Top = 207
       Width = 472
       Height = 21
       Margins.Left = 15
@@ -207,7 +207,7 @@ object settingsForm: TsettingsForm
         Caption = 'Auto formatting'
       end
       object autoFormattingHotKey: THotKey
-        Left = 102
+        Left = 107
         Top = 0
         Width = 145
         Height = 19
@@ -240,7 +240,7 @@ object settingsForm: TsettingsForm
         Caption = 'Fallback style'
       end
       object fallbackStyleComboBox: TComboBox
-        Left = 102
+        Left = 107
         Top = 0
         Width = 145
         Height = 21
@@ -260,10 +260,42 @@ object settingsForm: TsettingsForm
           'Microsoft')
       end
     end
+    object formatSelectedLinesPanel: TPanel
+      AlignWithMargins = True
+      Left = 15
+      Top = 180
+      Width = 472
+      Height = 21
+      Margins.Left = 15
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 6
+      DesignSize = (
+        472
+        21)
+      object formatSelectedLinesLabel: TLabel
+        Left = 0
+        Top = 4
+        Width = 101
+        Height = 13
+        Caption = 'Format selected lines'
+      end
+      object formatSelectedLinesHotKey: THotKey
+        Left = 107
+        Top = 0
+        Width = 145
+        Height = 19
+        Anchors = [akTop, akRight]
+        HotKey = 0
+        Modifiers = []
+        TabOrder = 0
+        OnChange = formatSelectedLinesHotKeyChange
+      end
+    end
   end
   object footerPanel: TPanel
     Left = 5
-    Top = 211
+    Top = 231
     Width = 490
     Height = 25
     Align = alBottom

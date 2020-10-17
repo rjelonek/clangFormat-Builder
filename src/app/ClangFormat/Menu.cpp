@@ -14,6 +14,7 @@ namespace ClangFormat
 	{
 		clangFormatMenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 		formatCurrentSourceSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
+		formatSelectedLinesSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 		formatAllSourcesSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 		enableAutoFormattingSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
 		convertAllFilesToUTF8BomSubmenu = std::unique_ptr<TMenuItem>(new TMenuItem(0x0));
@@ -25,6 +26,12 @@ namespace ClangFormat
 	{
 		CodeFormatter codeFormatter(settings);
 		codeFormatter.FormatCurrentSource();
+	}
+
+	void __fastcall Menu::FormatSelectedLinesSubmenuClick(System::TObject *Sender)
+	{
+		CodeFormatter codeFormatter(settings);
+		codeFormatter.FormatSelectedLines();
 	}
 
 	void __fastcall Menu::FormatAllSourcesSubmenuClick(System::TObject *Sender)
@@ -83,6 +90,7 @@ namespace ClangFormat
 	{
 		clangFormatMenu->Caption = "ClangFormat";
 		formatCurrentSourceSubmenu->Caption = "Format current source";
+		formatSelectedLinesSubmenu->Caption = "Format selected lines";
 		formatAllSourcesSubmenu->Caption = "Format all sources";
 		enableAutoFormattingSubmenu->Caption = "Enable auto formatting";
 		convertAllFilesToUTF8BomSubmenu->Caption = "Convert all files to UTF8 BOM";
@@ -93,12 +101,14 @@ namespace ClangFormat
 	void Menu::SetShortCuts()
 	{
 		formatCurrentSourceSubmenu->ShortCut = settings->shortcuts.formatAllSources;
+		formatSelectedLinesSubmenu->ShortCut = settings->shortcuts.formatSelectedLines;
 		enableAutoFormattingSubmenu->ShortCut = settings->shortcuts.autoFormatting;
 	}
 
 	void Menu::SetEvents()
 	{
 		formatCurrentSourceSubmenu->OnClick = FormatCurrentSourceSubmenuClick;
+		formatSelectedLinesSubmenu->OnClick = FormatSelectedLinesSubmenuClick;
 		formatAllSourcesSubmenu->OnClick = FormatAllSourcesSubmenuClick;
 		enableAutoFormattingSubmenu->OnClick = EnableAutoFormattingSubmenuClick;
 		convertAllFilesToUTF8BomSubmenu->OnClick = ConvertAllFilesToUTF8BomSubmenuClick;
@@ -109,6 +119,7 @@ namespace ClangFormat
 	void Menu::SetMenus()
 	{
 		clangFormatMenu->Add(formatCurrentSourceSubmenu.get());
+		clangFormatMenu->Add(formatSelectedLinesSubmenu.get());
 		clangFormatMenu->Add(formatAllSourcesSubmenu.get());
 		clangFormatMenu->Add(enableAutoFormattingSubmenu.get());
 		clangFormatMenu->Add(convertAllFilesToUTF8BomSubmenu.get());

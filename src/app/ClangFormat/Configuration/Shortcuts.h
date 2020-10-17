@@ -15,6 +15,7 @@ namespace ClangFormat
 
 			TShortCut autoFormatting;
 			TShortCut formatAllSources;
+			TShortCut formatSelectedLines;
 		};
 	}; // namespace Configuration
 };	   // namespace ClangFormat
