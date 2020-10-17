@@ -53,6 +53,7 @@ When you want format your current source file on demand then press `Alt + A` or 
 You can change default shortcuts for `Enable auto formatting` and `Format current source`.
 
 ### Other features
+* format selected lines
 * format all sources added to project
 * convert file encoding to UTF-8 BOM
 
