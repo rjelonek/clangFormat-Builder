@@ -34,6 +34,8 @@ namespace ClangFormat
 		void SetMenus();
 		void SetStates();
 
+		int IndexOfIdeToolsMenu(TMainMenu *mainMenu);
+
 	  public:
 		Menu(boost::shared_ptr<Configuration::Settings> settings);
 		void Add();
