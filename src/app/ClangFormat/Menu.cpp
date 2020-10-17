@@ -81,7 +81,8 @@ namespace ClangFormat
 				SetEvents();
 				SetMenus();
 				SetStates();
-				services->MainMenu->Items->Add(clangFormatMenu.get());
+				int indexOfIdeToolsMenu = IndexOfIdeToolsMenu(services->MainMenu);
+				services->MainMenu->Items->Insert(indexOfIdeToolsMenu + 1, clangFormatMenu.get());
 			}
 		}
 	}
@@ -130,5 +131,21 @@ namespace ClangFormat
 	void Menu::SetStates()
 	{
 		enableAutoFormattingSubmenu->Checked = settings->general.autoFormatting;
+	}
+
+	int Menu::IndexOfIdeToolsMenu(TMainMenu *mainMenu)
+	{
+		int indexOfIdeToolsMenu = 0;
+		if (mainMenu)
+		{
+			for (int menuIndex = 0; menuIndex < mainMenu->Items->Count; ++menuIndex)
+				if (mainMenu->Items->Items[menuIndex]->Name == "ToolsMenu")
+				{
+					indexOfIdeToolsMenu = menuIndex;
+					break;
+				}
+		}
+
+		return indexOfIdeToolsMenu;
 	}
 } // namespace ClangFormat
