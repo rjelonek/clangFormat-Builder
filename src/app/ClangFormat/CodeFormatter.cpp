@@ -113,7 +113,11 @@ namespace ClangFormat
 			String extension = TPath::GetExtension(sourceEditor->FileName).LowerCase();
 			if (extension == ".cpp" || extension == ".h")
 			{
-				messages.AddInfo("Formatting \"" + sourceEditor->FileName + "\"");
+				String lines = "";
+				if (startLine != 0 && endLine != 0)
+					lines = " --lines=" + UIntToStr(startLine) + ":" + UIntToStr(endLine);
+
+				messages.AddInfo("Formatting \"" + sourceEditor->FileName + "\"" + lines);
 				int editorSize = 0;
 				String textFromEditor = GetText(sourceEditor, editorSize);
 				if (!textFromEditor.IsEmpty())
@@ -132,7 +136,7 @@ namespace ClangFormat
 							retVal = FormatResult::Ok;
 						}
 						else
-							messages.AddError("Formatting \"" + sourceEditor->FileName + "\" failed");
+							messages.AddError("Formatting \"" + sourceEditor->FileName + "\"" + lines + " failed");
 
 						if (TFile::Exists(tempFile))
 							TFile::Delete(tempFile);
