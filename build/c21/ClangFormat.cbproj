@@ -183,6 +183,10 @@
             <DependentOn>..\..\src\app\ClangFormat\Observer\IDEObserver.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <CppCompile Include="..\..\src\app\ClangFormat\Pipe.cpp">
+            <DependentOn>..\..\src\app\ClangFormat\Pipe.h</DependentOn>
+            <BuildOrder>22</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\src\app\ClangFormat\Theming.cpp">
             <DependentOn>..\..\src\app\ClangFormat\Theming.h</DependentOn>
             <BuildOrder>18</BuildOrder>
