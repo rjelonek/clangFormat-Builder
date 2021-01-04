@@ -3,8 +3,8 @@
 
 #define RELEASE 1
 #define BREAKING 0
-#define FEATURE 1
-#define FIX 1
+#define FEATURE 2
+#define FIX 0
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
