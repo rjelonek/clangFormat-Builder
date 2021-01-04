@@ -171,7 +171,11 @@ namespace ClangFormat
 			startupInfo.hStdInput = stdInRead;
 			startupInfo.dwFlags |= STARTF_USESTDHANDLES;
 
-			retVal = CreateProcess(0x0, command.c_str(), 0x0, 0x0, true, CREATE_NO_WINDOW, 0x0, startupDirectory.c_str(), &startupInfo, &processInfo);
+			wchar_t *startupDirectoryTemp = 0x0;
+			if (!startupDirectory.IsEmpty())
+				startupDirectoryTemp = startupDirectory.c_str();
+
+			retVal = CreateProcess(0x0, command.c_str(), 0x0, 0x0, true, CREATE_NO_WINDOW, 0x0, startupDirectoryTemp, &startupInfo, &processInfo);
 			if (retVal)
 			{
 				openedProcess = processInfo.hProcess;

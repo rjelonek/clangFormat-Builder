@@ -2,9 +2,8 @@
 #pragma hdrstop
 
 #include "CodeFormatter.h"
-#include "Settings.h"
 #include "IOTAEditExtension.h"
-#include "Pipe.h"
+#include "ClangFormatWrapper.h"
 
 namespace ClangFormat
 {
@@ -63,44 +62,6 @@ namespace ClangFormat
 		}
 	}
 
-	bool CodeFormatter::FormatSource(const String &textToFormat, String &output, String &errorMessage, const String pathFile, String style,
-									 String fallbackStyle, unsigned int startLine, unsigned int endLine)
-	{
-		bool retVal = false;
-		output = EmptyStr;
-		errorMessage = EmptyStr;
-		if (!settings->general.clangFormatPath.IsEmpty() && !textToFormat.IsEmpty() && !style.IsEmpty())
-		{
-			String styleParam = " --style=" + style;
-			String fallbackStyleParam = " --fallback-style=" + fallbackStyle;
-			String fileNameParam = EmptyStr;
-			String startupDirectory = EmptyStr;
-			if (!pathFile.IsEmpty())
-			{
-				fileNameParam = " --assume-filename=\"" + TPath::GetFileName(pathFile) + "\"";
-				startupDirectory = TPath::GetDirectoryName(pathFile);
-			}
-
-			String linesParam = EmptyStr;
-			if (startLine != 0 && endLine != 0)
-				linesParam = " --lines=" + UIntToStr(startLine) + ":" + UIntToStr(endLine);
-
-			Pipe pipe;
-			if (pipe.Open(settings->general.clangFormatPath + styleParam + fallbackStyleParam + fileNameParam + linesParam, startupDirectory))
-			{
-				if (pipe.Write(textToFormat))
-					pipe.Read(output);
-
-				pipe.ReadError(errorMessage);
-				retVal = errorMessage.IsEmpty();
-			}
-
-			pipe.Close();
-		}
-
-		return retVal;
-	}
-
 	FormatResult CodeFormatter::FormatSource(_di_IOTASourceEditor sourceEditor, unsigned int startLine, unsigned int endLine)
 	{
 		FormatResult retVal = FormatResult::FormattingFailed;
@@ -122,8 +83,9 @@ namespace ClangFormat
 					{
 						String formattedText = EmptyStr;
 						String errorMessage = EmptyStr;
-						if (FormatSource(textFromEditor, formattedText, errorMessage, sourceEditor->FileName, settings->general.style,
-										 settings->general.fallbackStyle, startLine, endLine))
+						ClangFormatWrapper clangFormatWrapper(settings);
+						if (clangFormatWrapper.FormatSource(textFromEditor, formattedText, errorMessage, sourceEditor->FileName,
+															settings->general.style, settings->general.fallbackStyle, startLine, endLine))
 						{
 							std::map<int, TOTACharPos> bookmarkList;
 							GetBookmarkList(sourceEditor, bookmarkList);
@@ -274,6 +236,7 @@ namespace ClangFormat
 								filteredProjectFiles->Add(projectFiles->Strings[fileIndex]);
 						}
 
+						ClangFormatWrapper clangFormatWrapper(settings);
 						String filesCount = IntToStr(filteredProjectFiles->Count);
 						for (int fileIndex = 0; fileIndex < filteredProjectFiles->Count; ++fileIndex)
 						{
@@ -287,8 +250,8 @@ namespace ClangFormat
 								String textFromFile = encoding->GetString(rawContent, offset, rawContent.Length - offset);
 								String formattedText = EmptyStr;
 								String errorMessage = EmptyStr;
-								if (FormatSource(textFromFile, formattedText, errorMessage, filePath, settings->general.style,
-												 settings->general.fallbackStyle, 0, 0))
+								if (clangFormatWrapper.FormatSource(textFromFile, formattedText, errorMessage, filePath, settings->general.style,
+																	settings->general.fallbackStyle, 0, 0))
 								{
 									TFile::WriteAllText(filePath, formattedText, encoding);
 								}

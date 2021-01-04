@@ -54,6 +54,7 @@ class TsettingsForm : public TForm
   private: // User declarations
 	boost::shared_ptr<ClangFormat::Configuration::Settings> settings;
 	void InitializeComponents();
+	void UpdateClangFormatVersionInfo();
 
   public: // User declarations
 	__fastcall TsettingsForm(TComponent *Owner, boost::shared_ptr<ClangFormat::Configuration::Settings> settings);

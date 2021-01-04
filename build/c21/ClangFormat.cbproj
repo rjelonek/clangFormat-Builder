@@ -129,6 +129,10 @@
             <Form>clangFormat.res</Form>
             <BuildOrder>19</BuildOrder>
         </ResourceCompile>
+        <CppCompile Include="..\..\src\app\ClangFormat\ClangFormatWrapper.cpp">
+            <DependentOn>..\..\src\app\ClangFormat\ClangFormatWrapper.h</DependentOn>
+            <BuildOrder>23</BuildOrder>
+        </CppCompile>
         <CppCompile Include="..\..\src\app\ClangFormat\CodeFormatter.cpp">
             <DependentOn>..\..\src\app\ClangFormat\CodeFormatter.h</DependentOn>
             <BuildOrder>3</BuildOrder>
