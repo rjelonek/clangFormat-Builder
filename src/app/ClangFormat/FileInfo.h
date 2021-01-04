@@ -9,7 +9,7 @@ namespace ClangFormat
 	class FileInfo
 	{
 	  private:
-		std::unique_ptr<char[]> verData;
+		std::unique_ptr<wchar_t[]> verData;
 		String subBlockRoot;
 
 		void Initialize(String fileName);
