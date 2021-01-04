@@ -2,8 +2,8 @@
 #pragma hdrstop
 
 #include "SettingsForm.h"
-#include "Settings.h"
 #include "Theming.h"
+#include "ClangFormatWrapper.h"
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -30,6 +30,8 @@ void TsettingsForm::InitializeComponents()
 	fallbackStyleComboBox->ShowHint = true;
 	fallbackStyleComboBox->Hint = "The name of the predefined style used as a fallback in case clang-format is invoked with style=file, but can not "
 								  "find the .clang-format file to use. Use fallback-style=none to skip formatting.";
+
+	UpdateClangFormatVersionInfo();
 }
 
 void __fastcall TsettingsForm::FormShow(TObject *Sender)
@@ -52,7 +54,8 @@ void __fastcall TsettingsForm::selectFileButtonClick(TObject *Sender)
 		if (selectFileOpenDialog->Execute(this->Handle))
 		{
 			settings->general.clangFormatPath = selectFileOpenDialog->FileName;
-			clangFormatPathEdit->Text = selectFileOpenDialog->FileName;
+			clangFormatPathEdit->Text = settings->general.clangFormatPath;
+			UpdateClangFormatVersionInfo();
 		}
 	}
 	catch (Exception &ex)
@@ -95,4 +98,15 @@ void __fastcall TsettingsForm::resetButtonClick(TObject *Sender)
 {
 	settings->SetDefaultValues();
 	InitializeComponents();
+}
+
+void TsettingsForm::UpdateClangFormatVersionInfo()
+{
+	if (!settings->general.clangFormatPath.IsEmpty())
+	{
+		ClangFormat::ClangFormatWrapper clangFormatWrapper(settings);
+		String version = clangFormatWrapper.GetVersion();
+		if (!version.IsEmpty())
+			clangFormatPathEdit->Text = version + " - " + settings->general.clangFormatPath;
+	}
 }
