@@ -5,6 +5,7 @@
 #include "Settings.h"
 #include "Message.h"
 #include <map>
+#include <boost/shared_ptr.hpp>
 
 namespace ClangFormat
 {
@@ -24,8 +25,6 @@ namespace ClangFormat
 
 		String GetText(_di_IOTASourceEditor sourceEditor, int &editorSize);
 		void SetText(_di_IOTASourceEditor sourceEditor, int editorSize, String textToSet);
-		bool FormatSource(const String &textToFormat, String &output, String &errorMessage, const String pathFile, String style, String fallbackStyle,
-						  unsigned int startLine, unsigned int endLine);
 		FormatResult FormatSource(_di_IOTASourceEditor sourceEditor, unsigned int startLine, unsigned int endLine);
 		void GetBookmarkList(_di_IOTASourceEditor sourceEditor, std::map<int, TOTACharPos> &bookmarkList);
 		void SetBookmarkList(_di_IOTASourceEditor sourceEditor, std::map<int, TOTACharPos> &bookmarkList);
