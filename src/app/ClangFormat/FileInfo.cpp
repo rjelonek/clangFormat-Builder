@@ -23,7 +23,7 @@ namespace ClangFormat
 		unsigned long verSize = GetFileVersionInfoSize(fileName.c_str(), 0x0);
 		if (verSize != 0)
 		{
-			verData = std::unique_ptr<char[]>(new char[verSize]);
+			verData = std::unique_ptr<wchar_t[]>(new wchar_t[verSize]);
 			if (GetFileVersionInfo(fileName.c_str(), 0x0, verSize, verData.get()))
 			{
 				LangAndCodePage *buffer = 0x0;
@@ -49,7 +49,7 @@ namespace ClangFormat
 		String retVal = "";
 		if (verData)
 		{
-			char *buffer = 0x0;
+			wchar_t *buffer = 0x0;
 			unsigned int bufferSize = 0;
 			if (VerQueryValue(verData.get(), (subBlockRoot + subBlockKey).c_str(), (void **)&buffer, &bufferSize))
 				retVal = buffer;
@@ -82,7 +82,7 @@ namespace ClangFormat
 
 		if (verData)
 		{
-			char *buffer = 0x0;
+			wchar_t *buffer = 0x0;
 			unsigned int bufferSize = 0;
 			if (VerQueryValue(verData.get(), L"\\", (void **)&buffer, &bufferSize))
 			{
