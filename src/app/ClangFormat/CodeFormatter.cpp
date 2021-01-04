@@ -291,7 +291,7 @@ namespace ClangFormat
 						if (!IOTAEditExtension::IsAnyFileModified())
 							project->Refresh(false);
 
-						MessageBox(0x0, "Formatting all sources in project finished", AnsiString(Application->Title).c_str(), MB_OK);
+						MessageBox(0x0, L"Formatting all sources in project finished", Application->Title.c_str(), MB_OK);
 					}
 				}
 			}

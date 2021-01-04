@@ -66,7 +66,7 @@ namespace ClangFormat
 					if (!IOTAEditExtension::IsAnyFileModified())
 						project->Refresh(false);
 
-					MessageBox(0x0, "Converting files to UTF8 BOM in project finished", AnsiString(Application->Title).c_str(), MB_OK);
+					MessageBox(0x0, L"Converting files to UTF8 BOM in project finished", Application->Title.c_str(), MB_OK);
 				}
 			}
 		}
