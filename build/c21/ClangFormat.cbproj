@@ -64,7 +64,7 @@
         <ILINK_GenerateImportLibrary>true</ILINK_GenerateImportLibrary>
         <ILINK_GenerateLibFile>true</ILINK_GenerateLibFile>
         <SanitizedProjectName>ClangFormat</SanitizedProjectName>
-        <_TCHARMapping>char</_TCHARMapping>
+        <_TCHARMapping>wchar_t</_TCHARMapping>
         <Multithreaded>true</Multithreaded>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
@@ -182,6 +182,10 @@
         <CppCompile Include="..\..\src\app\ClangFormat\Observer\IDEObserver.cpp">
             <DependentOn>..\..\src\app\ClangFormat\Observer\IDEObserver.h</DependentOn>
             <BuildOrder>2</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="..\..\src\app\ClangFormat\Pipe.cpp">
+            <DependentOn>..\..\src\app\ClangFormat\Pipe.h</DependentOn>
+            <BuildOrder>22</BuildOrder>
         </CppCompile>
         <CppCompile Include="..\..\src\app\ClangFormat\Theming.cpp">
             <DependentOn>..\..\src\app\ClangFormat\Theming.h</DependentOn>

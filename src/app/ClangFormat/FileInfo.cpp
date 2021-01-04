@@ -20,15 +20,15 @@ namespace ClangFormat
 	void FileInfo::Initialize(String fileName)
 	{
 		subBlockRoot = "";
-		unsigned long verSize = GetFileVersionInfoSize(AnsiString(fileName).c_str(), 0x0);
+		unsigned long verSize = GetFileVersionInfoSize(fileName.c_str(), 0x0);
 		if (verSize != 0)
 		{
 			verData = std::unique_ptr<char[]>(new char[verSize]);
-			if (GetFileVersionInfo(AnsiString(fileName).c_str(), 0x0, verSize, verData.get()))
+			if (GetFileVersionInfo(fileName.c_str(), 0x0, verSize, verData.get()))
 			{
 				LangAndCodePage *buffer = 0x0;
 				unsigned int bufferSize = 0;
-				if (VerQueryValue(verData.get(), "\\VarFileInfo\\Translation", (void **)&buffer, &bufferSize))
+				if (VerQueryValue(verData.get(), L"\\VarFileInfo\\Translation", (void **)&buffer, &bufferSize))
 				{
 					wchar_t tempLangAndCodePage[9] = {};
 					for (unsigned int i = 0; i < (bufferSize / sizeof(struct LangAndCodePage)); ++i)
@@ -51,7 +51,7 @@ namespace ClangFormat
 		{
 			char *buffer = 0x0;
 			unsigned int bufferSize = 0;
-			if (VerQueryValue(verData.get(), AnsiString(subBlockRoot + subBlockKey).c_str(), (void **)&buffer, &bufferSize))
+			if (VerQueryValue(verData.get(), (subBlockRoot + subBlockKey).c_str(), (void **)&buffer, &bufferSize))
 				retVal = buffer;
 		}
 
@@ -84,7 +84,7 @@ namespace ClangFormat
 		{
 			char *buffer = 0x0;
 			unsigned int bufferSize = 0;
-			if (VerQueryValue(verData.get(), "\\", (void **)&buffer, &bufferSize))
+			if (VerQueryValue(verData.get(), L"\\", (void **)&buffer, &bufferSize))
 			{
 				VS_FIXEDFILEINFO *verInfo = (VS_FIXEDFILEINFO *)buffer;
 				unsigned long fixedFileInfoSignature = 0xfeef04bd;

@@ -4,6 +4,7 @@
 #include "CodeFormatter.h"
 #include "Settings.h"
 #include "IOTAEditExtension.h"
+#include "Pipe.h"
 
 namespace ClangFormat
 {
@@ -62,44 +63,39 @@ namespace ClangFormat
 		}
 	}
 
-	bool CodeFormatter::FormatSource(String filePath, String style, String fallbackStyle)
-	{
-		return FormatSource(filePath, style, fallbackStyle, 0, 0);
-	}
-
-	bool CodeFormatter::FormatSource(String filePath, String style, String fallbackStyle, unsigned int startLine, unsigned int endLine)
+	bool CodeFormatter::FormatSource(const String &textToFormat, String &output, String &errorMessage, const String pathFile, String style,
+									 String fallbackStyle, unsigned int startLine, unsigned int endLine)
 	{
 		bool retVal = false;
-		if (!settings->general.clangFormatPath.IsEmpty() && TFile::Exists(filePath) && !style.IsEmpty())
+		output = EmptyStr;
+		errorMessage = EmptyStr;
+		if (!settings->general.clangFormatPath.IsEmpty() && !textToFormat.IsEmpty() && !style.IsEmpty())
 		{
 			String styleParam = " --style=" + style;
 			String fallbackStyleParam = " --fallback-style=" + fallbackStyle;
-			String filePathParam = " -i \"" + filePath + "\"";
-			String linesParam = "";
+			String fileNameParam = EmptyStr;
+			String startupDirectory = EmptyStr;
+			if (!pathFile.IsEmpty())
+			{
+				fileNameParam = " --assume-filename=\"" + TPath::GetFileName(pathFile) + "\"";
+				startupDirectory = TPath::GetDirectoryName(pathFile);
+			}
+
+			String linesParam = EmptyStr;
 			if (startLine != 0 && endLine != 0)
 				linesParam = " --lines=" + UIntToStr(startLine) + ":" + UIntToStr(endLine);
 
-			SHELLEXECUTEINFOW ShExecInfo;
-			ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-			ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
-			ShExecInfo.hwnd = 0x0;
-			ShExecInfo.lpVerb = L"Open";
-			ShExecInfo.lpFile = settings->general.clangFormatPath.c_str();
-			ShExecInfo.lpParameters = String(styleParam + fallbackStyleParam + filePathParam + linesParam).c_str();
-			ShExecInfo.lpDirectory = 0x0;
-			ShExecInfo.nShow = SW_HIDE;
-			ShExecInfo.hInstApp = 0x0;
-			if (ShellExecuteExW(&ShExecInfo))
+			Pipe pipe;
+			if (pipe.Open(settings->general.clangFormatPath + styleParam + fallbackStyleParam + fileNameParam + linesParam, startupDirectory))
 			{
-				WaitForSingleObject(ShExecInfo.hProcess, 30000);
-				DWORD dwExitCode;
-				GetExitCodeProcess(ShExecInfo.hProcess, &dwExitCode);
+				if (pipe.Write(textToFormat))
+					pipe.Read(output);
 
-				if (dwExitCode == STILL_ACTIVE)
-					TerminateProcess(ShExecInfo.hProcess, 1);
-				else if (dwExitCode == 0)
-					retVal = true;
+				pipe.ReadError(errorMessage);
+				retVal = errorMessage.IsEmpty();
 			}
+
+			pipe.Close();
 		}
 
 		return retVal;
@@ -122,13 +118,13 @@ namespace ClangFormat
 				String textFromEditor = GetText(sourceEditor, editorSize);
 				if (!textFromEditor.IsEmpty())
 				{
-					String tempFile = sourceEditor->FileName + ".temp";
 					try
 					{
-						TFile::WriteAllText(tempFile, textFromEditor, TEncoding::UTF8);
-						if (FormatSource(tempFile, settings->general.style, settings->general.fallbackStyle, startLine, endLine))
+						String formattedText = EmptyStr;
+						String errorMessage = EmptyStr;
+						if (FormatSource(textFromEditor, formattedText, errorMessage, sourceEditor->FileName, settings->general.style,
+										 settings->general.fallbackStyle, startLine, endLine))
 						{
-							String formattedText = TFile::ReadAllText(tempFile, TEncoding::UTF8);
 							std::map<int, TOTACharPos> bookmarkList;
 							GetBookmarkList(sourceEditor, bookmarkList);
 							SetText(sourceEditor, editorSize, formattedText.Trim());
@@ -136,10 +132,12 @@ namespace ClangFormat
 							retVal = FormatResult::Ok;
 						}
 						else
-							messages.AddError("Formatting \"" + sourceEditor->FileName + "\"" + lines + " failed");
+						{
+							if (!errorMessage.IsEmpty())
+								errorMessage = " (" + errorMessage + ")";
 
-						if (TFile::Exists(tempFile))
-							TFile::Delete(tempFile);
+							messages.AddError("Formatting \"" + sourceEditor->FileName + "\"" + lines + " failed" + errorMessage);
+						}
 					}
 					catch (Exception &ex)
 					{
@@ -279,19 +277,43 @@ namespace ClangFormat
 						String filesCount = IntToStr(filteredProjectFiles->Count);
 						for (int fileIndex = 0; fileIndex < filteredProjectFiles->Count; ++fileIndex)
 						{
-							messages.AddSubInfo(IntToStr(fileIndex + 1) + "/" + filesCount + " \"" + filteredProjectFiles->Strings[fileIndex] + "\"");
-							if (!FormatSource(filteredProjectFiles->Strings[fileIndex], settings->general.style, settings->general.fallbackStyle))
+							String filePath = filteredProjectFiles->Strings[fileIndex];
+							messages.AddSubInfo(IntToStr(fileIndex + 1) + "/" + filesCount + " \"" + filePath + "\"");
+							try
 							{
-								retVal = false;
-								messages.AddError("Formatting \"" + filteredProjectFiles->Strings[fileIndex] + "\" failed");
+								TByteDynArray rawContent = TFile::ReadAllBytes(filePath);
+								TEncoding *encoding = 0x0;
+								int offset = TEncoding::GetBufferEncoding(rawContent, encoding);
+								String textFromFile = encoding->GetString(rawContent, offset, rawContent.Length - offset);
+								String formattedText = EmptyStr;
+								String errorMessage = EmptyStr;
+								if (FormatSource(textFromFile, formattedText, errorMessage, filePath, settings->general.style,
+												 settings->general.fallbackStyle, 0, 0))
+								{
+									TFile::WriteAllText(filePath, formattedText, encoding);
+								}
+								else
+								{
+									retVal = false;
+									if (!errorMessage.IsEmpty())
+										errorMessage = " (" + errorMessage + ")";
+
+									messages.AddError("Formatting \"" + filePath + "\"" + " failed" + errorMessage);
+								}
 							}
+							catch (Exception &ex)
+							{
+								messages.AddError(ex.Message + " (\"" + filePath + "\")", __FUNC__);
+							}
+
+							Application->ProcessMessages();
 						}
 
 						messages.AddInfo("Formatting all sources in project finished");
 						if (!IOTAEditExtension::IsAnyFileModified())
 							project->Refresh(false);
 
-						MessageBox(0x0, "Formatting all sources in project finished", AnsiString(Application->Title).c_str(), MB_OK);
+						MessageBox(0x0, L"Formatting all sources in project finished", Application->Title.c_str(), MB_OK);
 					}
 				}
 			}
