@@ -3,9 +3,9 @@
 
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.StdCtrls.hpp>
 
 class TaboutForm : public TForm
 {

@@ -1,8 +1,8 @@
 ﻿#ifndef ClangFormatWrapperH
 #define ClangFormatWrapperH
 
-#include <System.hpp>
 #include "Settings.h"
+#include <System.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace ClangFormat

@@ -2,8 +2,8 @@
 #pragma hdrstop
 
 #include "SettingsForm.h"
-#include "Theming.h"
 #include "ClangFormatWrapper.h"
+#include "Theming.h"
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"

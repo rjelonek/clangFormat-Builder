@@ -2,8 +2,8 @@
 #pragma hdrstop
 
 #include "CodeFormatter.h"
-#include "IOTAEditExtension.h"
 #include "ClangFormatWrapper.h"
+#include "IOTAEditExtension.h"
 
 namespace ClangFormat
 {

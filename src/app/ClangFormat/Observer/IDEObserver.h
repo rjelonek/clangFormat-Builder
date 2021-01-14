@@ -1,10 +1,10 @@
 ﻿#ifndef IDEObserverH
 #define IDEObserverH
 
-#include <ToolsAPI.hpp>
-#include <memory>
-#include <map>
 #include "FileSourceObserver.h"
+#include <ToolsAPI.hpp>
+#include <map>
+#include <memory>
 
 namespace ClangFormat
 {

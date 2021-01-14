@@ -1,8 +1,8 @@
 ﻿#ifndef FileSourceObserverH
 #define FileSourceObserverH
 
-#include <ToolsAPI.hpp>
 #include "Settings.h"
+#include <ToolsAPI.hpp>
 
 namespace ClangFormat
 {

@@ -1,11 +1,11 @@
 ﻿#pragma hdrstop
 
 #include "ClangFormatWrapper.h"
-#include <System.SysUtils.hpp>
+#include "Pipe.h"
 #include "Settings.h"
 #include <System.IOUtils.hpp>
-#include "Pipe.h"
 #include <System.RegularExpressions.hpp>
+#include <System.SysUtils.hpp>
 
 namespace ClangFormat
 {

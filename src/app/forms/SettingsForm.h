@@ -1,14 +1,14 @@
 ﻿#ifndef SettingsFormH
 #define SettingsFormH
 
-#include <System.Classes.hpp>
-#include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
-#include <Vcl.ComCtrls.hpp>
-#include <Vcl.ExtCtrls.hpp>
-#include <Vcl.Dialogs.hpp>
 #include "Settings.h"
+#include <System.Classes.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.Dialogs.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.StdCtrls.hpp>
 
 class TsettingsForm : public TForm
 {

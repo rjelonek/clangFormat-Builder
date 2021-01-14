@@ -1,8 +1,8 @@
 ﻿#pragma hdrstop
 
 #include "Pipe.h"
-#include <memory>
 #include <System.SysUtils.hpp>
+#include <memory>
 
 namespace ClangFormat
 {

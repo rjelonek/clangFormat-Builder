@@ -1,8 +1,8 @@
 ﻿#ifndef EncodingConverterH
 #define EncodingConverterH
 
-#include <System.hpp>
 #include "Message.h"
+#include <System.hpp>
 
 namespace ClangFormat
 {
