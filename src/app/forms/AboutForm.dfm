@@ -27,7 +27,6 @@ object aboutForm: TaboutForm
     Align = alBottom
     Alignment = taCenter
     Caption = 'Copyright'
-    ExplicitWidth = 47
   end
   object titleLabel: TLabel
     AlignWithMargins = True
@@ -45,7 +44,6 @@ object aboutForm: TaboutForm
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitWidth = 38
   end
   object bevel: TBevel
     AlignWithMargins = True
@@ -58,9 +56,6 @@ object aboutForm: TaboutForm
     Margins.Bottom = 5
     Align = alTop
     Shape = bsTopLine
-    ExplicitLeft = 32
-    ExplicitTop = 40
-    ExplicitWidth = 250
   end
   object versionLabel: TLabel
     AlignWithMargins = True
@@ -71,7 +66,6 @@ object aboutForm: TaboutForm
     Align = alTop
     Alignment = taCenter
     Caption = 'Version'
-    ExplicitWidth = 35
   end
   object licenseLabel: TLabel
     AlignWithMargins = True
@@ -82,7 +76,6 @@ object aboutForm: TaboutForm
     Align = alTop
     Alignment = taCenter
     Caption = 'This project is licensed under the Apache-2.0 License'
-    ExplicitWidth = 254
   end
   object sourcesPanel: TPanel
     AlignWithMargins = True
