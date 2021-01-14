@@ -12,7 +12,7 @@ AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortEnumsOnASingleLine: false
+AllowShortEnumsOnASingleLine: true
 AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: Empty
@@ -32,19 +32,19 @@ BraceWrapping:
   AfterEnum:       true
   AfterFunction:   true
   AfterNamespace:  true
-  AfterObjCDeclaration: false
+  AfterObjCDeclaration: true
   AfterStruct:     true
   AfterUnion:      true
   AfterExternBlock: true
   BeforeCatch:     true
   BeforeElse:      true
-  BeforeLambdaBody: false
+  BeforeLambdaBody: true
   BeforeWhile:     true
   IndentBraces:    false
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
-BreakBeforeBinaryOperators: None
+BreakBeforeBinaryOperators: All
 BreakBeforeBraces: Custom
 BreakBeforeInheritanceComma: false
 BreakInheritanceList: BeforeColon
@@ -52,15 +52,15 @@ BreakBeforeTernaryOperators: true
 BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeColon
 BreakAfterJavaFieldAnnotations: false
-BreakStringLiterals: true
-ColumnLimit:     150
-CommentPragmas:  '^[^ ]'
+BreakStringLiterals: false
+ColumnLimit:     999999999
+CommentPragmas:  '^ IWYU pragma:'
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
-DeriveLineEnding: false
+DeriveLineEnding: true
 DerivePointerAlignment: false
 DisableFormat:   false
 ExperimentalAutoDetectBinPacking: false
@@ -88,7 +88,7 @@ IndentGotoLabels: true
 IndentPPDirectives: None
 IndentExternBlock: Indent
 IndentWidth:     4
-IndentWrappedFunctionNames: false
+IndentWrappedFunctionNames: true
 InsertTrailingCommas: None
 JavaScriptQuotes: Leave
 JavaScriptWrapImports: true
