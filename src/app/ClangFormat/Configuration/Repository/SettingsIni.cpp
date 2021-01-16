@@ -43,8 +43,7 @@ namespace ClangFormat
 
 				settings.shortcuts.autoFormatting = appIni->ReadInteger("Shortcuts", "AutoFormatting", settings.shortcuts.autoFormatting);
 				settings.shortcuts.formatAllSources = appIni->ReadInteger("Shortcuts", "FormatAllSources", settings.shortcuts.formatAllSources);
-				settings.shortcuts.formatSelectedLines =
-					appIni->ReadInteger("Shortcuts", "FormatSelectedLines", settings.shortcuts.formatSelectedLines);
+				settings.shortcuts.formatSelectedLines = appIni->ReadInteger("Shortcuts", "FormatSelectedLines", settings.shortcuts.formatSelectedLines);
 			}
 
 			void SettingsIni::Write(Settings &settings)

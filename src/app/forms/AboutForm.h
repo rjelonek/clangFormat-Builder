@@ -3,14 +3,14 @@
 
 #include <System.Classes.hpp>
 #include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.StdCtrls.hpp>
 
 class TaboutForm : public TForm
 {
-	__published : // IDE-managed Components
-				  TLabel *copyrightLabel;
+  __published: // IDE-managed Components
+	TLabel *copyrightLabel;
 	TLabel *titleLabel;
 	TBevel *bevel;
 	TLabel *versionLabel;
@@ -28,4 +28,5 @@ class TaboutForm : public TForm
   public: // User declarations
 	__fastcall TaboutForm(TComponent *Owner);
 };
+
 #endif

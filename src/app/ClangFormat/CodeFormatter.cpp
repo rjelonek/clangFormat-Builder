@@ -2,8 +2,8 @@
 #pragma hdrstop
 
 #include "CodeFormatter.h"
-#include "IOTAEditExtension.h"
 #include "ClangFormatWrapper.h"
+#include "IOTAEditExtension.h"
 
 namespace ClangFormat
 {
@@ -84,8 +84,7 @@ namespace ClangFormat
 						String formattedText = EmptyStr;
 						String errorMessage = EmptyStr;
 						ClangFormatWrapper clangFormatWrapper(settings);
-						if (clangFormatWrapper.FormatSource(textFromEditor, formattedText, errorMessage, sourceEditor->FileName,
-															settings->general.style, settings->general.fallbackStyle, startLine, endLine))
+						if (clangFormatWrapper.FormatSource(textFromEditor, formattedText, errorMessage, sourceEditor->FileName, settings->general.style, settings->general.fallbackStyle, startLine, endLine))
 						{
 							std::map<int, TOTACharPos> bookmarkList;
 							GetBookmarkList(sourceEditor, bookmarkList);
@@ -250,8 +249,7 @@ namespace ClangFormat
 								String textFromFile = encoding->GetString(rawContent, offset, rawContent.Length - offset);
 								String formattedText = EmptyStr;
 								String errorMessage = EmptyStr;
-								if (clangFormatWrapper.FormatSource(textFromFile, formattedText, errorMessage, filePath, settings->general.style,
-																	settings->general.fallbackStyle, 0, 0))
+								if (clangFormatWrapper.FormatSource(textFromFile, formattedText, errorMessage, filePath, settings->general.style, settings->general.fallbackStyle, 0, 0))
 								{
 									TFile::WriteAllText(filePath, formattedText, encoding);
 								}

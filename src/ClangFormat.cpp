@@ -2,10 +2,10 @@
 #pragma hdrstop
 
 #include "IDEObserver.h"
-#include "Menu.h"
-#include "Settings.h"
 #include "ISettingsReader.h"
 #include "ISettingsWriter.h"
+#include "Menu.h"
+#include "Settings.h"
 #include "SettingsIni.h"
 #include <boost/shared_ptr.hpp>
 

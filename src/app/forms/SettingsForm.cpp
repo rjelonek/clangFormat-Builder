@@ -2,16 +2,13 @@
 #pragma hdrstop
 
 #include "SettingsForm.h"
-#include "Theming.h"
 #include "ClangFormatWrapper.h"
+#include "Theming.h"
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
-__fastcall TsettingsForm::TsettingsForm(TComponent *Owner, boost::shared_ptr<ClangFormat::Configuration::Settings> settings)
-	: TForm(Owner), settings(settings)
-{
-}
+__fastcall TsettingsForm::TsettingsForm(TComponent *Owner, boost::shared_ptr<ClangFormat::Configuration::Settings> settings) : TForm(Owner), settings(settings) {}
 
 void TsettingsForm::InitializeComponents()
 {

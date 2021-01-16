@@ -1,9 +1,9 @@
 ﻿#ifndef MenuH
 #define MenuH
 
-#include <memory>
-#include <Vcl.Menus.hpp>
 #include "Settings.h"
+#include <Vcl.Menus.hpp>
+#include <memory>
 
 namespace ClangFormat
 {
@@ -41,4 +41,5 @@ namespace ClangFormat
 		void Add();
 	};
 }; // namespace ClangFormat
+
 #endif

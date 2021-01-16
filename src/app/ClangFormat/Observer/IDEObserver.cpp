@@ -15,8 +15,7 @@ namespace ClangFormat
 
 		__fastcall IDEObserver::~IDEObserver()
 		{
-			for (std::map<_di_IOTAEditor, FileSourceObserver *>::iterator item = fileSourceObservers.begin(); item != fileSourceObservers.end();
-				 ++item)
+			for (std::map<_di_IOTAEditor, FileSourceObserver *>::iterator item = fileSourceObservers.begin(); item != fileSourceObservers.end(); ++item)
 			{
 				delete item->second;
 				item->second = 0x0;

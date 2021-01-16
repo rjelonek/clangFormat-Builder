@@ -1,22 +1,12 @@
 ﻿#pragma hdrstop
 
 #include "Pipe.h"
-#include <memory>
 #include <System.SysUtils.hpp>
+#include <memory>
 
 namespace ClangFormat
 {
-	Pipe::Pipe()
-		: stdInRead(0x0),
-		  stdInWrite(0x0),
-		  stdOutRead(0x0),
-		  stdOutWrite(0x0),
-		  stdErrorRead(0x0),
-		  stdErrorWrite(0x0),
-		  openedProcess(0x0),
-		  bufferSize(4096)
-	{
-	}
+	Pipe::Pipe() : stdInRead(0x0), stdInWrite(0x0), stdOutRead(0x0), stdOutWrite(0x0), stdErrorRead(0x0), stdErrorWrite(0x0), openedProcess(0x0), bufferSize(4096) {}
 
 	Pipe::~Pipe()
 	{
@@ -75,7 +65,8 @@ namespace ClangFormat
 					break;
 
 				output += String(buffer.get(), readSize);
-			} while (readSize > 0);
+			}
+			while (readSize > 0);
 		}
 
 		return retVal;

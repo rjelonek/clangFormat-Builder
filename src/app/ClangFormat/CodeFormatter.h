@@ -1,11 +1,11 @@
 ﻿#ifndef CodeFormatterH
 #define CodeFormatterH
 
-#include <ToolsAPI.hpp>
-#include "Settings.h"
 #include "Message.h"
-#include <map>
+#include "Settings.h"
+#include <ToolsAPI.hpp>
 #include <boost/shared_ptr.hpp>
+#include <map>
 
 namespace ClangFormat
 {
@@ -37,4 +37,5 @@ namespace ClangFormat
 		bool FormatAllSources();
 	};
 }; // namespace ClangFormat
+
 #endif

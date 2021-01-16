@@ -1,19 +1,19 @@
 ﻿#ifndef SettingsFormH
 #define SettingsFormH
 
-#include <System.Classes.hpp>
-#include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
-#include <Vcl.ComCtrls.hpp>
-#include <Vcl.ExtCtrls.hpp>
-#include <Vcl.Dialogs.hpp>
 #include "Settings.h"
+#include <System.Classes.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.Dialogs.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.StdCtrls.hpp>
 
 class TsettingsForm : public TForm
 {
-	__published : // IDE-managed Components
-				  TCheckBox *autoFormattingCheckBox;
+  __published: // IDE-managed Components
+	TCheckBox *autoFormattingCheckBox;
 	TLabel *shortcutsLabel;
 	TLabel *generalLabel;
 	TPanel *clangFormatPathPanel;
@@ -59,4 +59,5 @@ class TsettingsForm : public TForm
   public: // User declarations
 	__fastcall TsettingsForm(TComponent *Owner, boost::shared_ptr<ClangFormat::Configuration::Settings> settings);
 };
+
 #endif

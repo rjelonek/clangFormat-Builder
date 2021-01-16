@@ -1,18 +1,17 @@
 ﻿#pragma hdrstop
 
 #include "ClangFormatWrapper.h"
-#include <System.SysUtils.hpp>
+#include "Pipe.h"
 #include "Settings.h"
 #include <System.IOUtils.hpp>
-#include "Pipe.h"
 #include <System.RegularExpressions.hpp>
+#include <System.SysUtils.hpp>
 
 namespace ClangFormat
 {
 	ClangFormatWrapper::ClangFormatWrapper(boost::shared_ptr<Configuration::Settings> settings) : settings(settings) {}
 
-	bool ClangFormatWrapper::FormatSource(const String &textToFormat, String &output, String &errorMessage, const String pathFile, String style,
-										  String fallbackStyle, unsigned int startLine, unsigned int endLine)
+	bool ClangFormatWrapper::FormatSource(const String &textToFormat, String &output, String &errorMessage, const String pathFile, String style, String fallbackStyle, unsigned int startLine, unsigned int endLine)
 	{
 		bool retVal = false;
 		output = EmptyStr;

@@ -35,4 +35,5 @@ namespace ClangFormat
 		bool ReadError(String &error);
 	};
 } // namespace ClangFormat
+
 #endif

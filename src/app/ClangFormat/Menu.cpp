@@ -2,11 +2,11 @@
 #pragma hdrstop
 
 #include "Menu.h"
-#include "CodeFormatter.h"
-#include "Settings.h"
-#include "EncodingConverter.h"
-#include "SettingsForm.h"
 #include "AboutForm.h"
+#include "CodeFormatter.h"
+#include "EncodingConverter.h"
+#include "Settings.h"
+#include "SettingsForm.h"
 
 namespace ClangFormat
 {

@@ -2,9 +2,9 @@
 #define SettingsH
 
 #include "General.h"
-#include "Shortcuts.h"
 #include "ISettingsReader.h"
 #include "ISettingsWriter.h"
+#include "Shortcuts.h"
 #include <boost/shared_ptr.hpp>
 
 namespace ClangFormat
@@ -27,4 +27,5 @@ namespace ClangFormat
 		};
 	}; // namespace Configuration
 };	   // namespace ClangFormat
+
 #endif

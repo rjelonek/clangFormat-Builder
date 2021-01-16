@@ -1,9 +1,9 @@
 ﻿#ifndef SettingsIniH
 #define SettingsIniH
 
-#include "Settings.h"
 #include "ISettingsReader.h"
 #include "ISettingsWriter.h"
+#include "Settings.h"
 #include <System.IniFiles.hpp>
 #include <memory>
 
