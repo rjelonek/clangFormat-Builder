@@ -9,8 +9,8 @@
 
 class TaboutForm : public TForm
 {
-	__published : // IDE-managed Components
-				  TLabel *copyrightLabel;
+  __published: // IDE-managed Components
+	TLabel *copyrightLabel;
 	TLabel *titleLabel;
 	TBevel *bevel;
 	TLabel *versionLabel;
@@ -28,4 +28,5 @@ class TaboutForm : public TForm
   public: // User declarations
 	__fastcall TaboutForm(TComponent *Owner);
 };
+
 #endif

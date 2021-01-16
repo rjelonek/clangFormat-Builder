@@ -16,8 +16,7 @@ void TaboutForm::InitializeComponents()
 	ClientWidth = 300;
 
 	sourceUrlLinkLabel->Caption = "Sources are available <a href=\"https://github.com/rjelonek/clangFormat-Builder\">here</a>";
-	licenseLinkLabel->Caption =
-		"See the <a href=\"https://github.com/rjelonek/clangFormat-Builder/blob/master/LICENSE\">LICENSE</a> file for the full license text";
+	licenseLinkLabel->Caption = "See the <a href=\"https://github.com/rjelonek/clangFormat-Builder/blob/master/LICENSE\">LICENSE</a> file for the full license text";
 
 	sourceUrlLinkLabel->Left = (sourcesPanel->Width - sourceUrlLinkLabel->Width) / 2;
 	licenseLinkLabel->Left = (licensePanel->Width - licenseLinkLabel->Width) / 2;

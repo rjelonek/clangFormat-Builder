@@ -41,4 +41,5 @@ namespace ClangFormat
 		void Add();
 	};
 }; // namespace ClangFormat
+
 #endif

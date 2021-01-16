@@ -6,7 +6,7 @@
 #endif
 #include <vcl.h>
 #pragma option push
-#pragma warn - 8070 //Function should return a value
+#pragma warn - 8070 // Function should return a value
 #include <memory>
 #pragma option pop
 #include "Settings.h"

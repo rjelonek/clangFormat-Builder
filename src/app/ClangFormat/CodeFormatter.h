@@ -37,4 +37,5 @@ namespace ClangFormat
 		bool FormatAllSources();
 	};
 }; // namespace ClangFormat
+
 #endif

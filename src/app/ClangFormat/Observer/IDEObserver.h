@@ -42,4 +42,5 @@ namespace ClangFormat
 		};
 	} // namespace Observer
 } // namespace ClangFormat
+
 #endif

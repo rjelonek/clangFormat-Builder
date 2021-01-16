@@ -25,4 +25,5 @@ namespace ClangFormat
 		void AddSeparator();
 	};
 } // namespace ClangFormat
+
 #endif

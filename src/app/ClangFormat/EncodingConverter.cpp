@@ -50,8 +50,7 @@ namespace ClangFormat
 					ConvertingResult result = ConvertingResult::Ok;
 					for (int fileIndex = 0; fileIndex < filteredProjectFiles->Count; ++fileIndex)
 					{
-						messages.AddSubInfo(IntToStr(fileIndex + 1) + "/" + filesCount + " Checking file " +
-											filteredProjectFiles->Strings[fileIndex]);
+						messages.AddSubInfo(IntToStr(fileIndex + 1) + "/" + filesCount + " Checking file " + filteredProjectFiles->Strings[fileIndex]);
 						result = ToUTF8Bom(filteredProjectFiles->Strings[fileIndex]);
 						if (result == ConvertingResult::Ok)
 							messages.AddSubInfo("\tFile converted");

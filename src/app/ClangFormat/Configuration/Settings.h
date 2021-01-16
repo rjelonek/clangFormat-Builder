@@ -27,4 +27,5 @@ namespace ClangFormat
 		};
 	}; // namespace Configuration
 };	   // namespace ClangFormat
+
 #endif

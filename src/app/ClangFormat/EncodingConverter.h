@@ -28,4 +28,5 @@ namespace ClangFormat
 		bool AllFilesToUTF8Bom();
 	};
 }; // namespace ClangFormat
+
 #endif
