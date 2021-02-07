@@ -107,7 +107,7 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <TLIB_PageSize>128</TLIB_PageSize>
+        <TLIB_PageSize>256</TLIB_PageSize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <BCC_waus>false</BCC_waus>
