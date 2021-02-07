@@ -32,14 +32,15 @@ namespace ClangFormat
 		CloseProcess();
 	}
 
-	bool Pipe::Write(const AnsiString &textToWrite)
+	bool Pipe::Write(const String &textToWrite)
 	{
 		bool retVal = false;
 		if (stdInWrite)
 		{
 			unsigned long writtenSize;
-			const char *buffer = textToWrite.c_str();
-			unsigned long sizeToWrite = static_cast<unsigned long>(textToWrite.Length());
+			RawByteString convertedTextToWrite = UTF8Encode(textToWrite);
+			const char *buffer = convertedTextToWrite.c_str();
+			unsigned long sizeToWrite = static_cast<unsigned long>(convertedTextToWrite.Length());
 			retVal = WriteFile(stdInWrite, buffer, sizeToWrite, &writtenSize, 0x0);
 		}
 
@@ -56,15 +57,16 @@ namespace ClangFormat
 			retVal = true;
 			unsigned long readSize;
 			std::unique_ptr<char[]> buffer(new char[bufferSize]);
-			memset(buffer.get(), 0x0, bufferSize);
+			std::memset(buffer.get(), 0x0, sizeof(char) * bufferSize);
 			bool readFileResult = false;
 			do
 			{
-				readFileResult = ReadFile(bufferToRead, buffer.get(), bufferSize, &readSize, 0x0);
+				readFileResult = ReadFile(bufferToRead, buffer.get(), bufferSize - 1, &readSize, 0x0);
 				if (!readFileResult || readSize == 0)
 					break;
 
-				output += String(buffer.get(), readSize);
+				output += UTF8ToString(buffer.get());
+				std::memset(buffer.get(), 0x0, sizeof(char) * bufferSize);
 			}
 			while (readSize > 0);
 		}
