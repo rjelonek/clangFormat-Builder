@@ -30,7 +30,7 @@ namespace ClangFormat
 		~Pipe();
 		bool Open(String command, String startupDirectory);
 		void Close();
-		bool Write(const AnsiString &textToWrite);
+		bool Write(const String &textToWrite);
 		bool Read(String &output);
 		bool ReadError(String &error);
 	};
