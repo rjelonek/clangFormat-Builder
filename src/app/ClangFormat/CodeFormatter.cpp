@@ -68,7 +68,7 @@ namespace ClangFormat
 		if (sourceEditor && !settings->general.style.IsEmpty())
 		{
 			String extension = TPath::GetExtension(sourceEditor->FileName).LowerCase();
-			if (extension == ".cpp" || extension == ".h")
+			if (extension == ".h" || extension == ".hpp" || extension == ".cpp" || extension == ".cc")
 			{
 				String lines = "";
 				if (startLine != 0 && endLine != 0)
@@ -231,7 +231,7 @@ namespace ClangFormat
 						for (int fileIndex = 0; fileIndex < projectFiles->Count; ++fileIndex)
 						{
 							String extension = TPath::GetExtension(projectFiles->Strings[fileIndex]).LowerCase();
-							if (extension == ".cpp" || extension == ".h")
+							if (extension == ".h" || extension == ".hpp" || extension == ".cpp" || extension == ".cc")
 								filteredProjectFiles->Add(projectFiles->Strings[fileIndex]);
 						}
 

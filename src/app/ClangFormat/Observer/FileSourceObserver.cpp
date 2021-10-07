@@ -59,7 +59,7 @@ namespace ClangFormat
 			if (editor)
 			{
 				String extension = TPath::GetExtension(editor->FileName).LowerCase();
-				if (extension == ".cpp" || extension == ".h")
+				if (extension == ".h" || extension == ".hpp" || extension == ".cpp" || extension == ".cc")
 				{
 					Unregister();
 					if (!fileSourceEditor && observerIndex < 0 && ::Supports(editor, __uuidof(IOTASourceEditor), &fileSourceEditor))

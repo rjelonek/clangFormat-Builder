@@ -36,7 +36,7 @@ After installation you need set up the path of `clang-format.exe`, unless you ad
 
 :information_source: Format operation can be undo
 
-:information_source: Formatting or converting apply only for files with extension `*.cpp` and `*.h`
+:information_source: Formatting or converting apply only for files with extension `*.h`, `*.hpp`, `*.cpp` and `*.cc`
 
 :information_source: Settings are saved at `%APPDATA%/clangFormat/app.ini`
 
